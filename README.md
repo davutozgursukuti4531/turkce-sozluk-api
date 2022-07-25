@@ -65,3 +65,6 @@ turkceSozlukApi.AtasozuDeyimAnlamCekme("damlaya damlaya göl olur").then(veriler
   atasozu_mu_deyim_mi: 'Atasözü'
 }
 ```
+
+# Iletişim:
+<a href="https://discord.com/users/586995957695119477">Discord</a>
