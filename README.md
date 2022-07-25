@@ -1,6 +1,6 @@
 # turkce-sozluk-api
 
-- Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yayınlandı: TDK üzerinden kelime, atasözü/değim vs. anlamlarını aratmak için npm modülü.
+- Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yayınlandı: TDK üzerinden kelime, atasözü/deyim vs. anlamlarını aratmak için npm modülü.
 
 # Nasıl Yüklenir
 
