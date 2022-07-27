@@ -8,3 +8,7 @@
 - KelimeKontrol fonksiyonu eklendi.
 - Detaylar arttırıldı.
 - AtasozuDeyimKontrol fonksiyonu eklendi.
+
+# 2.3.0
+
+- 2.2.0 da bulunan AtasozuDeyimKontrol fonksiyonu düzeltildi.
