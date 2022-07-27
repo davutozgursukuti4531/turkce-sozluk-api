@@ -1,7 +1,7 @@
 {
   "name": "turkce-sozluk-api",
-  "version": "2.1.0",
-  "description": "Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yayınlandı: TDK üzerinden kelime, atasözü/deyim vs. anlamlarını aratmak için npm modülü.",
+  "version": "2.2.0",
+  "description": "Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yazıldı: TDK üzerinden kelime, atasözü/deyim vs. anlamlarını aratmak için npm modülü.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
