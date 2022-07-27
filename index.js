@@ -16,7 +16,7 @@ class Sozluk extends EventEmitter{
     async KelimeAnlamCekme(kelime){
         try {
         const response = await axios.request({
-            url: "https://sozluk.gov.tr/gts?ara=" + kelime
+            url: "https://sozluk.gov.tr/gts?ara=" + encodeURI(kelime)
         })
         const body = response.data[0]
         return {
@@ -65,7 +65,7 @@ class Sozluk extends EventEmitter{
      */
     async KelimeKontrol(kelime){
         const response = await axios.request({
-            url: "https://sozluk.gov.tr/gts?ara=" + kelime
+            url: "https://sozluk.gov.tr/gts?ara=" + encodeURI(kelime)
         })
         const body = response.data[0]
         return body.error === "Sonuç Bulunamadı" ? false : true
@@ -77,7 +77,7 @@ class Sozluk extends EventEmitter{
      */
     async AtasozuDeyimKontrol(atasozu){
         const response = await axios.request({
-            url: "https://sozluk.gov.tr/atasozu?ara=" + atasozu
+            url: "https://sozluk.gov.tr/atasozu?ara=" + encodeURI(atasozu)
         })
         const body = response.data[0]
         return body.error === "Sonuç Bulunamadı" ? false : true
