@@ -1,6 +1,6 @@
 {
   "name": "turkce-sozluk-api",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yazıldı: TDK üzerinden kelime, atasözü/deyim vs. anlamlarını aratmak için npm modülü.",
   "main": "index.js",
   "scripts": {
