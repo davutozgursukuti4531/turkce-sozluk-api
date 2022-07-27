@@ -13,11 +13,8 @@ npm i turkce-sozluk-api
 yarn add turkce-sozluk-api
 ```
 
-# 2.2.0 Yenilikler
-- Eventler eklendi.
-- KelimeKontrol fonksiyonu eklendi.
-- Detaylar arttırıldı.
-- AtasozuDeyimKontrol fonksiyonu eklendi.
+# 2.3.0 Yenilikler
+- 2.2.0 da bulunan AtasozuDeyimKontrol fonksiyonu düzeltildi.
 # Nasıl Kullanılır
 Import Etmek.
 
