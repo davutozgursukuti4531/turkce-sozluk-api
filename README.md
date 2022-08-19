@@ -13,8 +13,18 @@ npm i turkce-sozluk-api
 yarn add turkce-sozluk-api
 ```
 
-# 2.3.0 Yenilikler
-- 2.2.0 da bulunan AtasozuDeyimKontrol fonksiyonu düzeltildi.
+# 2.4.0 Yenilikler
+- artık bu ve bundan sonra yayınlanan sürümlerde modül sürümü güncel değil ise terminale bir yazı yazdırılacak.
+- KelimeAnlamCekmeHata ve AtasozuDeyimAnlamCekmeHata eventleri kaldırıldı.
+- apiHata eventi eklendi eğer bu hata tetiklenirse discord dan modül sahibi ile iletişime geçiniz.
+- AtasozuDeyimAnlamCekme fonksiyonuna atara ve soz_bulundumu değerleri eklendi
+- KelimeAnlamCekme fonksiyonuna kelime_bulundumu değeri eklendi ve eğer kelime bulunamaz ise { kelime_bulundumu: false } şeklinde dönecektir
+
+# Sorulam ihtimali olan bazı sorulara cevap
+### Async/Await ve then kullanmadan kullanabilirmiyim?
+- cevap: Maalesef sitelere istek atma işlemleri Promise tabanlı olduğu için kullanamazsınız.
+
+
 # Nasıl Kullanılır
 Import Etmek.
 
@@ -30,20 +40,9 @@ import turkceSozlukApi from "turkce-sozluk-api"
 Kullanım:
 ### Eventler:
 ```js
-//Kelime için kullanım:
-turkceSozlukApi.KelimeAnlamCekme("sjsadksadsamlkdmasdlkas").then(veri => veri)//veri undefined olarak döner.
-//Yukarıdaki Mantıkta Kullanılırsa Hata Tetiklenir.
-turkceSozlukApi.on("KelimeAnlamCekmeHata", (hata) => {
-  //hata parametresi klasik JavaScript hata parametresidir.
-  console.log("Bir hata oluştu, Galiba kelime Bulunamadı.")
-})
-
-//Atasözü/Deyim için kullanım:
-turkceSozlukApi.AtasozuDeyimAnlamCekme("sjsadksadsamlkdmasdlkas").then(veri => veri)//veri undefined olarak döner.
-//Yukarıdaki Mantıkta Kullanılırsa Hata Tetiklenir.
-turkceSozlukApi.on("AtasozuDeyimAnlamCekmeHata", (hata) => {
-  //hata parametresi klasik JavaScript hata parametresidir.
-  console.log("Bir hata oluştu, Galiba atasözü/deyim Bulunamadı.")
+turkceSozlukApi.on("apiHata", (hata) => {
+//hata parametresi node.js ve javascript ile alakalı bir parametredir eğer bu hata tetiklenirse modül sahibi ile iletişime geçin
+console.error(hata)
 })
 ```
 ### Async Function ile Kullanım:
@@ -89,7 +88,14 @@ turkceSozlukApi.AtasozuDeyimAnlamCekme("damlaya damlaya göl olur").then(veriler
   ornek: undefined,
   ikinci_ornek: "Yeşil kadifeden dikilmiş yarım baklava şeklinde muska çok ufakken üzerine gelen havaleden Fikret'i kurtarırmış.",
   birlesikler: 'baklava börek, baklava dilimi',
-  atasozu_deyim: 'baklava açmak'
+  atasozu_deyim: 'baklava açmak',
+  kelime_bulundumu: true
+}
+```
+#### Eğer kelime bulunamadı ise:
+```js
+{
+  kelime_bulundumu: false
 }
 ```
 ### Atasözü/Deyim Çıktı:
@@ -98,7 +104,18 @@ turkceSozlukApi.AtasozuDeyimAnlamCekme("damlaya damlaya göl olur").then(veriler
   soz: 'damlaya damlaya göl olur',
   anlam: 'azar azar olagelen şeyler birikerek önemli bir niceliğe ulaşacağı için küçümsenmemelidir.',
   anahtar_kelimeler: 'damlamak, olmak',
-  atasozu_mu_deyim_mi: 'Atasözü'
+  atasozu_mu_deyim_mi: 'Atasözü',
+  soz_bulundumu: true
+}
+```
+#### eğer bulunamadı ise:
+```js
+{
+  soz: undefined,
+  anlam: undefined,
+  anahtar_kelimeler: undefined,
+  atasozu_mu_deyim_mi: undefined,
+  soz_bulundumu: false
 }
 ```
 ### Kelime Kontrol Çıktı:
