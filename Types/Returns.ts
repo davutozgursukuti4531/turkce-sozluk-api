@@ -9,14 +9,16 @@ type KelimeAnlamCekmeReturns = Promise<{
     cogul_mu: boolean
     ornek: string
     ikinci_ornek: string
-    birlesikler: string
+    birlesikler: string,
+    kelime_bulundumu: boolean
 }>
 type AtasozuDeyimAnlamCekmeReturns = Promise<{
     soz: string
     anlam: string
     anahtar_kelimeler: string
     atasozu_mu_deyim_mi: string
+    soz_bulundumu: boolean
 }>
-type Events = "KelimeAnlamCekmeHata"|"AtasozuDeyimAnlamCekmeHata"
+type Events = "apiHata"
 
 export { KelimeAnlamCekmeReturns, AtasozuDeyimAnlamCekmeReturns, Events }
