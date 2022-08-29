@@ -1,12 +1,15 @@
 const rexarTools = require("rexar-tools")
 
+
 /**
- * @param {string} warmMessage
+ * 
+ * @param {string} warmMessage 
+ * @returns {Promise<void>}
  */
 const versionControl = async(warmMessage) => {
 
-const moduleVersion = await rexarTools.npm("turkce-sozluk-api").version
-    if(require(`../package.json`).version !== moduleVersion){
+const thisModule = await rexarTools.npm("turkce-sozluk-api")
+    if(require(`../package.json`).version !== thisModule.version){
         console.log(warmMessage)
     } else return;
 }
