@@ -1,8 +1,9 @@
 {
   "name": "turkce-sozluk-api",
-  "version": "2.3.0",
+  "version": "2.5.0",
   "description": "Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yazıldı: TDK üzerinden kelime, atasözü/deyim vs. anlamlarını aratmak için npm modülü.",
   "main": "index.js",
+  "typings": "./Types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +19,7 @@
     "atasozu",
     "kelime",
     "deyim",
+    "soz",
     "api"
   ],
   "author": "Davut Özgür Süküti",
@@ -28,6 +30,7 @@
   "homepage": "https://github.com/davutozgursukuti4531/turkce-sozluk-api#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "rexar-tools": "^2.3.0"
+    "colorette": "^2.0.19",
+    "rexar-tools": "^2.6.0"
   }
 }
