@@ -1,5 +1,4 @@
-import turkceSozlukApi from "../index.js";
-
+const turkceSozlukApi = await import("../esm/index.mjs").then(m => m.default)
 
 
 async function kelimeDeneme() {
