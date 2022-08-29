@@ -20,3 +20,13 @@
 - apiHata eventi eklendi eğer bu hata tetiklenirse discord dan modül sahibi ile iletişime geçiniz.
 - AtasozuDeyimAnlamCekme fonksiyonuna soz_bulundumu değeri eklendi.
 - KelimeAnlamCekme fonksiyonuna kelime_bulundumu değeri eklendi ve eğer kelime bulunamaz ise { kelime_bulundumu: false } şeklinde dönecektir.
+
+# 2.5.0
+
+- TypeScript desteği geldi artık TypeScript kullananlar modülü kullanabilecek.
+- apiHata eventi kaldırıldı.
+- kelimeApiHata, atasozuDeyimApiHata ve isimApiHata eventleri eklendi
+- artık kelime bulunamadığında tüm çıktılar undefined olarak kelime_bulundumu ise false olarak dönecektir.
+- artık atasözü bulunamadığında tüm çıktılar undefined olarak soz_bulundumu ise false olarak dönecektir.
+- IsımAnlamCekme ve IsimKontrol fonksiyonları eklendi.
+- Artık CommonJS ile yazanlar import ederken default kullanmaları gerek örnek kullanım: const turkceSozlukApi = require("turkce-sozluk-api").default
