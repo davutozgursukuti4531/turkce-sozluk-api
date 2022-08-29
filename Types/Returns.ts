@@ -1,24 +1,29 @@
-type KelimeAnlamCekmeReturns = Promise<{
+export type KelimeAnlamCekmeReturns = {
     kelime: string
-    anlam: string
-    ikinci_anlam: string
-    ucuncu_anlam: string
-    dorduncu_anlam: string
-    besinci_anlam: string
-    ozel_mi: boolean
-    cogul_mu: boolean
-    ornek: string
-    ikinci_ornek: string
-    birlesikler: string,
+    anlam: string | undefined
+    ikinci_anlam: string | undefined
+    ucuncu_anlam: string | undefined
+    dorduncu_anlam: string | undefined
+    besinci_anlam: string | undefined
+    ozel_mi: boolean | undefined
+    cogul_mu: boolean | undefined
+    ornek: string | undefined
+    ikinci_ornek: string | undefined
+    birlesikler: string | undefined
     kelime_bulundumu: boolean
-}>
-type AtasozuDeyimAnlamCekmeReturns = Promise<{
-    soz: string
-    anlam: string
-    anahtar_kelimeler: string
-    atasozu_mu_deyim_mi: string
+    atasozu_deyim: string | undefined
+} | undefined
+export type AtasozuDeyimAnlamCekmeReturns = {
+    soz: string | undefined
+    anlam: string | undefined
+    anahtar_kelimeler: string | undefined
+    atasozu_mu_deyim_mi: string | undefined
     soz_bulundumu: boolean
-}>
-type Events = "apiHata"
-
-export { KelimeAnlamCekmeReturns, AtasozuDeyimAnlamCekmeReturns, Events }
+} | undefined
+export type IsımAnlamCekmeReturns = {
+    ad: string | undefined
+    anlam: string | undefined
+    cinsiyeti: string | undefined
+    isim_bulundumu: boolean
+}
+export type Events = "isimApiHata" | "atasozuDeyimApiHata" | "kelimeApiHata"
