@@ -13,14 +13,16 @@ npm i turkce-sozluk-api
 yarn add turkce-sozluk-api
 ```
 
-# 2.4.0 Yenilikler
-- artık bu ve bundan sonra yayınlanan sürümlerde modül sürümü güncel değil ise terminale bir yazı yazdırılacak.
-- KelimeAnlamCekmeHata ve AtasozuDeyimAnlamCekmeHata eventleri kaldırıldı.
-- apiHata eventi eklendi eğer bu hata tetiklenirse discord dan modül sahibi ile iletişime geçiniz.
-- AtasozuDeyimAnlamCekme fonksiyonuna atara ve soz_bulundumu değerleri eklendi
-- KelimeAnlamCekme fonksiyonuna kelime_bulundumu değeri eklendi ve eğer kelime bulunamaz ise { kelime_bulundumu: false } şeklinde dönecektir
+# 2.5.0 Yenilikler
+- TypeScript desteği geldi artık TypeScript kullananlar modülü kullanabilecek.
+- apiHata eventi kaldırıldı.
+- kelimeApiHata, atasozuDeyimApiHata ve isimApiHata eventleri eklendi
+- artık kelime bulunamadığında tüm çıktılar undefined olarak kelime_bulundumu ise false olarak dönecektir.
+- artık atasözü bulunamadığında tüm çıktılar undefined olarak soz_bulundumu ise false olarak dönecektir.
+- IsımAnlamCekme ve IsimKontrol fonksiyonları eklendi.
+- Artık CommonJS ile yazanlar import ederken default kullanmaları gerek örnek kullanım: const turkceSozlukApi = require("turkce-sozluk-api").default
 
-# Sorulam ihtimali olan bazı sorulara cevap
+# Sorulma ihtimali olan bazı sorulara cevap
 ### Async/Await ve then kullanmadan kullanabilirmiyim?
 - cevap: Maalesef sitelere istek atma işlemleri Promise tabanlı olduğu için kullanamazsınız.
 
@@ -30,17 +32,34 @@ Import Etmek.
 
 CommonJS.
 ```js
-const turkceSozlukApi = require("turkce-sozluk-api")
+const turkceSozlukApi = require("turkce-sozluk-api").default
 ```
 ESModule
 ```mjs
+import turkceSozlukApi from "turkce-sozluk-api"
+//yada
+const turkceSozlukApi = await import("turkce-sozluk-api/esm/index.mjs").then(m => m.default)
+```
+TypeScript
+```js
 import turkceSozlukApi from "turkce-sozluk-api"
 ```
 
 Kullanım:
 ### Eventler:
 ```js
-turkceSozlukApi.on("apiHata", (hata) => {
+//kelime hatası:
+turkceSozlukApi.on("kelimeApiHata", (hata) => {
+//hata parametresi node.js ve javascript ile alakalı bir parametredir eğer bu hata tetiklenirse modül sahibi ile iletişime geçin
+console.error(hata)
+})
+//atasözü/deyim hatası
+turkceSozlukApi.on("atasozuDeyimApiHata", (hata) => {
+//hata parametresi node.js ve javascript ile alakalı bir parametredir eğer bu hata tetiklenirse modül sahibi ile iletişime geçin
+console.error(hata)
+})
+//isim hatası:
+turkceSozlukApi.on("isimApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir eğer bu hata tetiklenirse modül sahibi ile iletişime geçin
 console.error(hata)
 })
@@ -56,14 +75,22 @@ async function atasozu_deyimDeneme() {
 async function kelimekontroldeneme() {
     return console.log(await turkceSozlukApi.KelimeKontrol("baklava"))
 }
-async function atasözüdeyimkontroldeneme() {
-    return console.log(await turkceSozlukApi.AtasözüDeyimKontrol("damlaya damlaya göl olur"))
+async function atasozudeyimkontroldeneme() {
+    return console.log(await turkceSozlukApi.AtasozuDeyimKontrol("damlaya damlaya göl olur"))
+}
+async function isimkontroldeneme() {
+    return console.log(await turkceSozlukApi.IsimKontrol("erkek", "davut"))
+}
+async function isimDeneme() {
+    return console.log(await turkceSozlukApi.IsimAnlamCekme("erkek", "davut"))
 }
 
 kelimeDeneme()
 atasozu_deyimDeneme()
 kelimekontroldeneme()
 atasözüdeyimkontroldeneme()
+isimkontroldeneme()
+isimDeneme()
 ```
 ### Then ile Kullanım:
 ```js
@@ -71,6 +98,8 @@ turkceSozlukApi.KelimeAnlamCekme("baklava").then(veriler => console.log(veriler)
 turkceSozlukApi.AtasozuDeyimAnlamCekme("damlaya damlaya göl olur").then(veriler => console.log(veriler))
 turkceSozlukApi.KelimeKontrol("baklava").then(veriler => console.log(veriler))
 turkceSozlukApi.AtasozuDeyimAnlamCekme("damlaya damlaya göl olur").then(veriler => console.log(veriler))
+turkceSozlukApi.IsimKontrol("erkek", "davut").then(veriler => console.log(veriler))
+turkceSozlukApi.IsimAnlamCekme("erkek", "davut").then(veriler => console.log(veriler))
 ```
 
 # Çıktılar
@@ -118,13 +147,35 @@ turkceSozlukApi.AtasozuDeyimAnlamCekme("damlaya damlaya göl olur").then(veriler
   soz_bulundumu: false
 }
 ```
+### İsim Çıktı:
+```js
+{
+  ad: 'Davut',
+  anlam: '1. Sevgili, aziz.2. İsraillilerin, sesinin güzelliği ve şairliği ile tanınan hükümdar ve peygamberi.',
+  cinsiyeti: 'Erkek',
+  isim_bulundumu: true
+}
+```
+### eğer bulunamadı ise:
+```js
+{
+  ad: undefined,
+  anlam: undefined,
+  cinsiyeti: undefined,
+  isim_bulundumu: false
+}
+```
 ### Kelime Kontrol Çıktı:
 ```js
-true //eğer true is kelime mevcuttur false ise mevcut değildir
+true //eğer true ise kelime mevcuttur false ise mevcut değildir
 ```
 ### Atasözü/Deyim Kontrol Çıktı:
 ```js
-true //eğer true is atasözü/deyim mevcuttur false ise mevcut değildir
+true //eğer true ise atasözü/deyim mevcuttur false ise mevcut değildir
+```
+### İsim Kontrol Çıktı:
+```js
+true //eğer true ise isim mevcuttur false ise mevcut değildir
 ```
 # Iletişim:
 <a href="https://discord.com/users/586995957695119477">Discord</a>
