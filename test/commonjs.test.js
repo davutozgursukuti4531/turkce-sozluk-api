@@ -1,5 +1,6 @@
 const turkceSozlukApi = require("../index").default
 
 
-
-turkceSozlukApi.IsimAnlamCekme("erkek", "davut").then((v) => console.log(v))
+turkceSozlukApi.IdIleKelimeAnlamCekme("5458").then(v => console.log(v))
+turkceSozlukApi.EczacilikTerimAnlamCekme("antibiyotik").then((v) => console.log(v))
+turkceSozlukApi.KelimeLehceleriCekme("kardeş").then((v) => console.log(v))
