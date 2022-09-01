@@ -30,3 +30,11 @@
 - artık atasözü bulunamadığında tüm çıktılar undefined olarak soz_bulundumu ise false olarak dönecektir.
 - IsımAnlamCekme ve IsimKontrol fonksiyonları eklendi.
 - Artık CommonJS ile yazanlar import ederken default kullanmaları gerek örnek kullanım: const turkceSozlukApi = require("turkce-sozluk-api").default
+
+# 2.6.0
+
+- IdIleKelimeAnlamCekme methodu eklendi artık bir kelimenin anlamlarını sözlükteki ID sini kullanarak çekebilirsiniz.
+- EczacilikTerimAnlamCekme methodu eklendi artık: İlaç ve Eczacılık Terimleri Sözlüğü'ndeki terimleri girerek anlamlarını çekebilirsiniz.
+- KelimeLehcelerCekme methodu eklendi artık bir kelimenin diğer türkçelerdekinin karşılığını görebilirsiniz örneğin türkçedeki kardeş kelimesinin azericesi gardaş dır.
+- veriler bulunamadığında undefined olarak dönme sorunu giderildi
+- idIleKelimeApiHata, eczacilikApiHata ve lehcelerApiHata eventleri eklendi.
