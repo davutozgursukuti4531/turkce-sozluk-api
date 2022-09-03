@@ -1,4 +1,4 @@
-const rexarTools = require("rexar-tools")
+const rexarTools = require("rexar-tools").default
 
 
 /**
