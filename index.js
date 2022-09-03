@@ -1,5 +1,5 @@
 const axios = require("axios").default
-const rexarTools = require("rexar-tools")
+const rexarTools = require("rexar-tools").default
 const EventEmitter = require("node:events")
 const colorette = require("colorette")
 const versionControl = require("./Utils/versionControl.js")
@@ -22,10 +22,11 @@ class turkceSozlukApi extends EventEmitter{
             url: "https://sozluk.gov.tr/gts?ara=" + encodeURI(kelime)
         })
         const body = response.data[0]
+        const yazimBody = await this.KelimeYazimCekme(body.madde)
         const kelime_bulundumu = response.data.error ? false : true
         const result = {
-            kelime: body.madde,
-            id: body.madde_id,
+            kelime: body?.madde,
+            id: body?.madde_id,
             anlam: body?.anlamlarListe[0]?.anlam,
             ikinci_anlam: body?.anlamlarListe[1]?.anlam,
             ucuncu_anlam: body?.anlamlarListe[2]?.anlam,
@@ -36,7 +37,11 @@ class turkceSozlukApi extends EventEmitter{
             ornek: body?.anlamlarListe[0]?.orneklerListe ? body?.anlamlarListe[0]?.orneklerListe[0] !== undefined ? body?.anlamlarListe[0]?.orneklerListe[0].ornek : undefined : undefined,
             ikinci_ornek: body?.anlamlarListe[1]?.orneklerListe ? body?.anlamlarListe[1]?.orneklerListe[0] !== undefined ? body?.anlamlarListe[1]?.orneklerListe[0].ornek : undefined : undefined,
             birlesikler: body?.birlesikler ? body.birlesikler : undefined,
-            atasozu_deyim: body?.atasozu ? body?.atasozu[0].madde : undefined,
+            atasozu_deyim: body?.atasozu ? body?.atasozu[0]?.madde : undefined,
+            ikinci_atasozu_deyim: body?.atasozu ? body?.atasozu[1]?.madde : undefined,
+            ucuncu_atasozu_deyim: body?.atasozu ? body?.atasozu[2]?.madde : undefined,
+            dorduncu_atasozu_deyim: body?.atasozu ? body?.atasozu[3]?.madde : undefined,
+            ses_kodu: yazimBody?.ses_kodu,
             kelime_bulundumu
         }
         return result
@@ -159,6 +164,7 @@ class turkceSozlukApi extends EventEmitter{
             url: "https://sozluk.gov.tr/gts_id?id=" + encodeURI(id)
         })
         const body = response.data[0]
+        const yazimBody = await this.KelimeYazimCekme(body?.madde)
         const kelime_bulundumu = response.data.error ? false : true
         const result = {
             kelime: body?.madde,
@@ -173,7 +179,11 @@ class turkceSozlukApi extends EventEmitter{
             ornek: body?.anlamlarListe[0]?.orneklerListe ? body?.anlamlarListe[0]?.orneklerListe[0] !== undefined ? body?.anlamlarListe[0]?.orneklerListe[0].ornek : undefined : undefined,
             ikinci_ornek: body?.anlamlarListe[1]?.orneklerListe ? body?.anlamlarListe[1]?.orneklerListe[0] !== undefined ? body?.anlamlarListe[1]?.orneklerListe[0].ornek : undefined : undefined,
             birlesikler: body?.birlesikler ? body.birlesikler : undefined,
-            atasozu_deyim: body?.atasozu ? body?.atasozu[0].madde : undefined,
+            atasozu_deyim: body?.atasozu ? body?.atasozu[0]?.madde : undefined,
+            ikinci_atasozu_deyim: body?.atasozu ? body?.atasozu[1]?.madde : undefined,
+            ucuncu_atasozu_deyim: body?.atasozu ? body?.atasozu[2]?.madde : undefined,
+            dorduncu_atasozu_deyim: body?.atasozu ? body?.atasozu[3]?.madde : undefined,
+            ses_kodu: yazimBody?.ses_kodu,
             kelime_bulundumu
         }
         return result
@@ -205,11 +215,11 @@ class turkceSozlukApi extends EventEmitter{
         const body = response.data[0];
         const terim_bulundumu = response.data.error ? false : true;
         const result = {
-            terim: body.terim,
-            id: body.soz_id,
-            ingilizce: body.ingilizce,
-            tanim: body.tanim,
-            kontrol: body.kontrol,
+            terim: body?.terim,
+            id: body?.soz_id,
+            ingilizce: body?.ingilizce,
+            tanim: body?.tanim,
+            kontrol: body?.kontrol,
             terim_bulundumu
         }
         return result
@@ -335,6 +345,58 @@ class turkceSozlukApi extends EventEmitter{
                     uygurca_3: undefined,
                     uygurca_4: undefined
                 },
+                kelime_bulundumu: false
+            }
+        }
+    }
+    async KelimeYazimCekme(kelime){
+        try {
+        const response = await axios.request("https://sozluk.gov.tr/yazim?ara="+encodeURI(kelime))
+        const body = response.data[0]
+        const kelime_bulundumu = response.data.error ? false : true
+        return {
+            kelime: body?.sozu,
+            id: body?.yazim_id,
+            ses_kodu: body?.seskod,
+            ekler: body?.ekler,
+            kelime_bulundumu
+        }
+        } catch(e){
+        this.emit("kelimeYazımApiHata", e)
+        return {
+            kelime: undefined,
+            id: undefined,
+            ses_kodu: undefined,
+            ekler: undefined,
+            kelime_bulundumu: false
+        }
+        }
+    }
+    async KelimeDerlemeVeriCekme(kelime){
+        try {
+        const response = await axios.request("https://sozluk.gov.tr/derleme?ara="+encodeURI(kelime))
+        const body = response.data[0]
+        const kelime_bulundumu = response.data.error ? false : true
+        return {
+            kelime: body?.madde,
+            id: body?.madde_id,
+            kunye_id: body?.kunye_id,
+            asil_kelime: body?.asilkelim,
+            anlam: body?.anlam,
+            sehir: body?.sehir.replace("<b>", "").replace("</b>", ""),
+            eser_ad: body?.eser_ad,
+            kelime_bulundumu
+        }
+        } catch(e){
+            this.emit("derlemeApiHata", e)
+            return {
+                kelime: undefined,
+                id: undefined,
+                kunye_id: undefined,
+                asil_kelime: undefined,
+                anlam: undefined,
+                sehir: undefined,
+                eser_ad: undefined,
                 kelime_bulundumu: false
             }
         }
