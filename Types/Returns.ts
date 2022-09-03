@@ -13,6 +13,10 @@ export type KelimeAnlamCekmeReturns = {
     birlesikler: string | undefined
     kelime_bulundumu: boolean
     atasozu_deyim: string | undefined
+    ikinci_atasozu_deyim: string | undefined
+    ucuncu_atasozu_deyim: string | undefined
+    dorduncu_atasozu_deyim: string | undefined
+    ses_kodu: string | undefined
 }
 export type AtasozuDeyimAnlamCekmeReturns = {
     soz: string | undefined
@@ -86,5 +90,22 @@ export type KelimeLehcelerCekmeReturns = {
         uygurca_4: string | undefined
     },
     kelime_bulundumu: boolean
+}
+export type KelimeYazimCekmeReturns = {
+    id: string | undefined
+    yazim: string | undefined
+    ekler: string | undefined
+    ses_kodu: string | undefined
+    kelime_bulundumu: boolean | undefined
+}
+export type KelimeDerlemeVeriCekmeReturns = {
+    kelime: string | undefined,
+    id: string | undefined,
+    kunye_id: string | undefined,
+    asil_kelime: string | undefined,
+    anlam: string | undefined,
+    sehir: string | undefined,
+    eser_ad: string | undefined
+    kelime_bulundumu: boolean | undefined
 }
 export type Events = "isimApiHata" | "atasozuDeyimApiHata" | "kelimeApiHata"
