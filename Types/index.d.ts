@@ -35,6 +35,7 @@ declare module "turkce-sozluk-api"{
         ingilizce: string | undefined
         tanim: string | undefined
         kontrol: string | undefined
+        terim_bulundumu: boolean | undefined
     }
     export type KelimeLehcelerCekmeReturns = {
         azerice: {
@@ -87,6 +88,23 @@ declare module "turkce-sozluk-api"{
         },
         kelime_bulundumu: boolean
     }
+    export type KelimeYazimCekmeReturns = {
+        id: string | undefined
+        yazim: string | undefined
+        ekler: string | undefined
+        ses_kodu: string | undefined
+        kelime_bulundumu: boolean | undefined
+    }
+    export type KelimeDerlemeVeriCekmeReturns = {
+        kelime: string | undefined,
+        id: string | undefined,
+        kunye_id: string | undefined,
+        asil_kelime: string | undefined,
+        anlam: string | undefined,
+        sehir: string | undefined,
+        eser_ad: string | undefined
+        kelime_bulundumu: boolean | undefined
+    }
     export type Events = "isimApiHata" | "atasozuDeyimApiHata" | "kelimeApiHata"
     class turkceSozlukApi extends EventEmitter{
         public KelimeAnlamCekme(kelime: string): Promise<KelimeAnlamCekmeReturns>
@@ -98,6 +116,8 @@ declare module "turkce-sozluk-api"{
         public EczacilikTerimAnlamCekme(terim: string): Promise<EczacilikTerimAnlamCekmeReturns>
         public IdIleKelimeAnlamCekme(id: string): Promise<KelimeAnlamCekmeReturns>
         public KelimeLehcelerCekme(kelime: string): Promise<KelimeLehcelerCekmeReturns>
+        public KelimeYazimCekme(kelime: string): Promise<KelimeYazimCekmeReturns>
+        public KelimeDerlemeVeriCekme(kelime: string): Promise<KelimeDerlemeVeriCekmeReturns>
     }
     export default new turkceSozlukApi()
 }
