@@ -38,3 +38,11 @@
 - KelimeLehcelerCekme methodu eklendi artık bir kelimenin diğer türkçelerdekinin karşılığını görebilirsiniz örneğin türkçedeki kardeş kelimesinin azericesi gardaş dır.
 - veriler bulunamadığında undefined olarak dönme sorunu giderildi
 - idIleKelimeApiHata, eczacilikApiHata ve lehcelerApiHata eventleri eklendi.
+
+# 2.7.0
+
+- bir çok sorun düzeltildi.
+- detaylar arttırıldı.
+- KelimeYazimVeriCekme methodu eklendi artık kelimenin yazımı ile ilgili verileri çekebilirsiniz.
+- KelimeDerlemeVeriCekme methodu eklendi artık kelimenin ağızdan çıkan kelimeleri girerek ağızdan çıkan halleri ile alakalı veri alabilirsiniz.
+- derlemeApiHata ve kelimeYazimApiHata eventleri eklendi.
