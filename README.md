@@ -2,6 +2,9 @@
 
 - Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yayınlandı: TDK üzerinden kelime, atasözü/deyim vs. anlamlarını aratmak için npm modülü.
 
+![Image](https://img.shields.io/npm/dt/turkce-sozluk-api.svg?color=%2351FC0&maxAge=3600)
+![Image](https://img.shields.io/npm/v/turkce-sozluk-api?color=red&label=turkce-sozluk-api)
+
 # Nasıl Yüklenir
 
 #### npm
@@ -13,17 +16,19 @@ npm i turkce-sozluk-api
 yarn add turkce-sozluk-api
 ```
 
-# 2.6.0 Yenilikler
-- IdIleKelimeAnlamCekme methodu eklendi artık bir kelimenin anlamlarını sözlükteki ID sini kullanarak çekebilirsiniz.
-- EczacilikTerimAnlamCekme methodu eklendi artık: İlaç ve Eczacılık Terimleri Sözlüğü'ndeki terimleri girerek anlamlarını çekebilirsiniz.
-- KelimeLehcelerCekme methodu eklendi artık bir kelimenin diğer türkçelerdekinin karşılığını görebilirsiniz örneğin türkçedeki kardeş kelimesinin azericesi gardaş dır.
-- veriler bulunamadığında undefined olarak dönme sorunu giderildi
-- idIleKelimeApiHata, eczacilikApiHata ve lehcelerApiHata eventleri eklendi.
+# 2.7.0 Yenilikler
+- bir çok sorun düzeltildi.
+- detaylar arttırıldı.
+- KelimeYazimVeriCekme methodu eklendi artık kelimenin yazımı ile ilgili verileri çekebilirsiniz.
+- KelimeDerlemeVeriCekme methodu eklendi artık kelimenin ağızdan çıkan kelimeleri girerek ağızdan çıkan halleri ile alakalı veri alabilirsiniz.
+- derlemeApiHata ve kelimeYazimApiHata eventleri eklendi.
 
 
 # Sorulma ihtimali olan bazı sorulara cevap
 ### Async/Await veya then kullanmadan kullanabilirmiyim?
 - cevap: Maalesef sitelere istek atma işlemleri Promise tabanlı olduğu için kullanamazsınız.
+### Verileri nerden çekiyorsunuz?
+- cevap: sozluk.gov.tr sitesinin apisini kullanarak çekiyorum.
 
 
 # Nasıl Kullanılır
@@ -51,37 +56,49 @@ Kullanım:
 turkceSozlukApi.on("kelimeApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir.
 //Kelime bulunamadığında tetiklenir.
-console.error(hata)
+console.log("Bir sorun oluştu galiba kelime bulunamadı.")
 })
 //atasözü/deyim hatası
 turkceSozlukApi.on("atasozuDeyimApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir.
 //Atasözü/Deyim bulunamadığında tetiklenir.
-console.error("Bir sorun oluştu galiba atasözü/deyim bulunamadı: " + hata)
+console.log("Bir sorun oluştu galiba atasözü/deyim bulunamadı.")
 })
 //isim hatası:
 turkceSozlukApi.on("isimApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir.
 //İsim bulunamadığında tetiklenir.
-console.error("Bir sorun oluştu galiba isim bulunamadı: " + hata)
+console.log("Bir sorun oluştu galiba isim bulunamadı.")
 })
 //id ile kelime hatası:
 turkceSozlukApi.on("idIleKelimeApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir.
 //Kelime bulunamadığında tetiklenir.
-console.error(hata)
+console.log("Bir sorun oluştu galiba kelime bulunamadı.")
 })
 //eczacılık terim hatası:
 turkceSozlukApi.on("eczacilikApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir.
 //Eczacılık sözlüğünde terim bulunamadığında tetiklenir.
-console.error("Bir sorun oluştu galiba terim bulunamadı: " + hata)
+console.log("Bir sorun oluştu galiba eczacılık sözlüğünde terim bulunamadı.")
 })
-//isim hatası:
+//lehçeler hatası:
 turkceSozlukApi.on("lehcelerApiHata", (hata) => {
 //hata parametresi node.js ve javascript ile alakalı bir parametredir.
 //kelime bulunamadığında tetiklenir.
-console.error("Bir sorun oluştu galiba isim bulunamadı: " + hata)
+console.log("Bir sorun oluştu galiba kelime lehçeleri bulunamadı.")
+})
+//kelime derleme veri hatası:
+turkceSozlukApi.on("derlemeApiHata", (hata) => {
+  //hata parametresi node.js ve javascript ile alakalı bir parametredir.
+  //kelime derlemesi bulunamadığında tetiklenir.
+  console.log("Bir sorun oluştu galiba kelime derlemeleri bulunamadı.")
+})
+//kelime yazım hatası:
+turkceSozlukApi.on("kelimeYazımApiHata", (hata) => {
+  //hata parametresi node.js ve javascript ile alakalı bir parametredir.
+  //kelime bulunamadığında tetiklenir.
+  console.log("Bir sorun oluştu galiba kelime bulunamadı.")
 })
 ```
 ### Async Function ile Kullanım:
@@ -104,6 +121,22 @@ async function isimkontroldeneme() {
 async function isimDeneme() {
     return console.log(await turkceSozlukApi.IsimAnlamCekme("erkek", "davut"))
 }
+async function idKelimeDeneme() {
+    return console.log(await turkceSozlukApi.IdIleKelimeAnlamCekme("5458"))
+}
+async function eczacilikDeneme() {
+    return console.log(await turkceSozlukApi.EczacilikTerimAnlamCekme("antibiyotik"))
+}
+async function lehceDeneme() {
+    return console.log(await turkceSozlukApi.KelimeLehceleriCekme("kardeş"))
+}
+async function yazimDeneme() {
+    return console.log(await turkceSozlukApi.KelimeYazimCekme("hakim"))
+}
+async function derlemeDeneme() {
+    return console.log(await turkceSozlukApi.KelimeDerlemeVeriCekme("gardaş"))
+}
+
 
 kelimeDeneme()
 atasozu_deyimDeneme()
@@ -111,6 +144,11 @@ kelimekontroldeneme()
 atasözüdeyimkontroldeneme()
 isimkontroldeneme()
 isimDeneme()
+idKelimeDeneme()
+eczacilikDeneme()
+lehceDeneme()
+yazimDeneme()
+derlemeDeneme()
 ```
 ### Then ile Kullanım:
 ```js
@@ -122,7 +160,9 @@ turkceSozlukApi.IsimKontrol("erkek", "davut").then(veriler => console.log(verile
 turkceSozlukApi.IsimAnlamCekme("erkek", "davut").then(veriler => console.log(veriler))
 turkceSozlukApi.IdIleKelimeAnlamCekme("5458").then(v => console.log(v))
 turkceSozlukApi.EczacilikTerimAnlamCekme("antibiyotik").then((v) => console.log(v))
-turkceSozlukApi.KelimeLehceleriCekme("kasadasdsad").then((v) => console.log(v))
+turkceSozlukApi.KelimeLehceleriCekme("kardeş").then((v) => console.log(v))
+turkceSozlukApi.KelimeYazimCekme("hakim").then(v => console.log(v))
+turkceSozlukApi.KelimeDerlemeVeriCekme("gardaş").then(v => console.log(v))
 ```
 
 # Çıktılar
@@ -142,6 +182,10 @@ turkceSozlukApi.KelimeLehceleriCekme("kasadasdsad").then((v) => console.log(v))
   ikinci_ornek: "Yeşil kadifeden dikilmiş yarım baklava şeklinde muska çok ufakken üzerine gelen havaleden Fikret'i kurtarırmış.",
   birlesikler: 'baklava börek, baklava dilimi',
   atasozu_deyim: 'baklava açmak',
+  ikinci_atasozu_deyim: undefined,
+  ucuncu_atasozu_deyim: undefined,
+  dorduncu_atasozu_deyim: undefined,
+  ses_kodu: 'b0592',//ses kodunu kullanmak için yüklemeniz lazım örnek yükleme: https://sozluk.gov.tr/ses/b0592.wav maalesef sadece .wav uzantısı ile yükleyebiliyoruz(denediğim kadarıyla) siz yükledikten sonra uzantısını .mp3 yada daha farklı birşey yapabilirsiniz.
   kelime_bulundumu: true
 }
 ```
@@ -150,17 +194,21 @@ turkceSozlukApi.KelimeLehceleriCekme("kasadasdsad").then((v) => console.log(v))
 {
   kelime: undefined,
   id: undefined,
-  anlam: undefined,
+  anlam: undefined,     
   ikinci_anlam: undefined,
   ucuncu_anlam: undefined,
   dorduncu_anlam: undefined,
   besinci_anlam: undefined,
-  ozel_mi: undefined,
-  cogul_mu: undefined,
+  ozel_mi: false,
+  cogul_mu: false,
   ornek: undefined,
   ikinci_ornek: undefined,
   birlesikler: undefined,
   atasozu_deyim: undefined,
+  ikinci_atasozu_deyim: undefined,
+  ucuncu_atasozu_deyim: undefined,
+  dorduncu_atasozu_deyim: undefined,
+  ses_kodu: undefined,
   kelime_bulundumu: false
 }
 ```
@@ -329,6 +377,52 @@ turkceSozlukApi.KelimeLehceleriCekme("kasadasdsad").then((v) => console.log(v))
     uygurca_3: undefined,
     uygurca_4: undefined
   },
+  kelime_bulundumu: false
+}
+```
+### Kelime Yazım çıktı:
+```js
+{
+  kelime: 'hakim ',
+  id: '29377',
+  ses_kodu: 'h0229',
+  ekler: '',
+  kelime_bulundumu: true
+}
+```
+### eğer bulunamadı ise:
+```js
+{
+  kelime: undefined,
+  id: undefined,
+  ses_kodu: undefined,
+  ekler: undefined,
+  kelime_bulundumu: false
+}
+```
+### Kelime Derleme çıktı:
+```js
+{
+  kelime: 'gardaş',
+  id: '87343',
+  kunye_id: '15',
+  asil_kelime: 'kardeş',
+  anlam: 'Kardeş',
+  sehir: 'Diyarbakır',
+  eser_ad: 'Diyarbakır Ağzı, İnceleme-Metinler-Sözlük',
+  kelime_bulundumu: true
+}
+```
+### eğer bulunamadı ise:
+```js
+{
+  kelime: undefined,
+  id: undefined,
+  kunye_id: undefined,
+  asil_kelime: undefined,
+  anlam: undefined,
+  sehir: undefined,
+  eser_ad: undefined,
   kelime_bulundumu: false
 }
 ```
