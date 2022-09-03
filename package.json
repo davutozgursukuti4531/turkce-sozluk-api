@@ -1,6 +1,6 @@
 {
   "name": "turkce-sozluk-api",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Eskiden Yapılmıştı Fakat Yapımcının hesap değiştirmesinden dolayı yeniden yazıldı: TDK üzerinden kelime, atasözü/deyim, eczacılık sözlüğü, lehçeler vs. anlamlarını aratmak için npm modülü.",
   "main": "index.js",
   "typings": "./Types/index.d.ts",
@@ -32,6 +32,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "colorette": "^2.0.19",
-    "rexar-tools": "^2.6.0"
+    "rexar-tools": "^2.7.0"
   }
 }
+
