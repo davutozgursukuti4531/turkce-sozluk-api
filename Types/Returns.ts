@@ -108,4 +108,13 @@ export type KelimeDerlemeVeriCekmeReturns = {
     eser_ad: string | undefined
     kelime_bulundumu: boolean | undefined
 }
-export type Events = "isimApiHata" | "atasozuDeyimApiHata" | "kelimeApiHata"
+export type Events = {
+    isimApiHata: (hata: Error) => void | Promise<void>
+    kelimeApiHata: (hata: Error) => void | Promise<void>
+    atasozuDeyimApiHata: (hata: Error) => void | Promise<void>
+    idIleKelimeApiHata: (hata: Error) => void | Promise<void>
+    eczacilikApiHata: (hata: Error) => void | Promise<void>
+    lehcelerApiHata: (hata: Error) => void | Promise<void>
+    kelimeYazımApiHata: (hata: Error) => void | Promise<void>
+    derlemeApiHata: (hata: Error) => void | Promise<void>
+}
