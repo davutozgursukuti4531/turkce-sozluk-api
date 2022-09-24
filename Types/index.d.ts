@@ -1,4 +1,5 @@
 import EventEmitter from "node:events"
+import TypedEventEmitter from "typed-emitter"
 declare module "turkce-sozluk-api"{
     export type KelimeAnlamCekmeReturns = {
         kelime: string
@@ -105,8 +106,17 @@ declare module "turkce-sozluk-api"{
         eser_ad: string | undefined
         kelime_bulundumu: boolean | undefined
     }
-    export type Events = "isimApiHata" | "atasozuDeyimApiHata" | "kelimeApiHata"
-    class turkceSozlukApi extends EventEmitter{
+    export type Events = {
+        isimApiHata: (hata: Error) => void | Promise<void>
+        kelimeApiHata: (hata: Error) => void | Promise<void>
+        atasozuDeyimApiHata: (hata: Error) => void | Promise<void>
+        idIleKelimeApiHata: (hata: Error) => void | Promise<void>
+        eczacilikApiHata: (hata: Error) => void | Promise<void>
+        lehcelerApiHata: (hata: Error) => void | Promise<void>
+        kelimeYazımApiHata: (hata: Error) => void | Promise<void>
+        derlemeApiHata: (hata: Error) => void | Promise<void>
+    }
+    class turkceSozlukApi extends (EventEmitter as new() => TypedEventEmitter<Events>){
         public KelimeAnlamCekme(kelime: string): Promise<KelimeAnlamCekmeReturns>
         public AtasozuDeyimAnlamCekme(inputSoz: string): Promise<AtasozuDeyimAnlamCekmeReturns>
         public KelimeKontrol(kelime: string): Promise<boolean>
