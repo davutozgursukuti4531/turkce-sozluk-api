@@ -16,12 +16,9 @@ npm i turkce-sozluk-api
 yarn add turkce-sozluk-api
 ```
 
-# 2.7.0 Yenilikler
-- bir çok sorun düzeltildi.
-- detaylar arttırıldı.
-- KelimeYazimVeriCekme methodu eklendi artık kelimenin yazımı ile ilgili verileri çekebilirsiniz.
-- KelimeDerlemeVeriCekme methodu eklendi artık kelimenin ağızdan çıkan kelimeleri girerek ağızdan çıkan halleri ile alakalı veri alabilirsiniz.
-- derlemeApiHata ve kelimeYazimApiHata eventleri eklendi.
+# 2.9.0 Yenilikler
+![Image](./Images/tsaEventler.png)
+- Bunu ekledim sadece
 
 
 # Sorulma ihtimali olan bazı sorulara cevap
