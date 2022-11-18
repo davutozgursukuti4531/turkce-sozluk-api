@@ -1,8 +1,8 @@
-const axios = require("axios").default
-const rexarTools = require("rexar-tools").default
-const EventEmitter = require("node:events")
-const colorette = require("colorette")
-const versionControl = require("./Utils/versionControl.js")
+import axios from"axios"
+import rexarTools from"rexar-tools"
+import EventEmitter from"node:events"
+import colorette from"colorette"
+import versionControl from"./Utils/versionControl"
 
 
 
