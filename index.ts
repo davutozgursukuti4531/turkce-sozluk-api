@@ -3,10 +3,11 @@ import rexarTools from"rexar-tools"
 import EventEmitter from"node:events"
 import colorette from"colorette"
 import versionControl from"./Utils/versionControl"
+import TypedEventEmitter from "typed-emitter"
+import { Events } from "./Types/Returns.ts"
 
 
-
-class turkceSozlukApi extends EventEmitter{
+class turkceSozlukApi extends (EventEmitter as new() => TypedEventEmitter<Events>){
     constructor(){
         super()
         versionControl(colorette.red("=> ") + colorette.blue("Modülü sürümü eski güncellemek için terminale: npm i turkce-sozluk-api@latest yazın."))
