@@ -16,7 +16,7 @@ class turkceSozlukApi extends EventEmitter{
      * @param {string} kelime
      * @return {import("./Types/Returns").KelimeAnlamCekmeReturns}
      */
-    async KelimeAnlamCekme(kelime){
+    async KelimeAnlamCekme(kelime: string){
         try {
         const response = await axios.request({
             url: "https://sozluk.gov.tr/gts?ara=" + encodeURI(kelime)
@@ -70,7 +70,7 @@ class turkceSozlukApi extends EventEmitter{
      * @param {string} inputSoz
      * @return {import("./Types/Returns").AtasozuDeyimAnlamCekmeReturns}
      */
-    async AtasozuDeyimAnlamCekme(inputSoz){
+    async AtasozuDeyimAnlamCekme(inputSoz: string){
         try {
         const response = await axios.request({
             url: "https://sozluk.gov.tr/atasozu?ara=" + encodeURI(inputSoz)
@@ -93,7 +93,7 @@ class turkceSozlukApi extends EventEmitter{
      * @param {string} kelime
      * @return {Promise<boolean>}
      */
-    async KelimeKontrol(kelime){
+    async KelimeKontrol(kelime: string){
         const response = await axios.request({
             url: "https://sozluk.gov.tr/gts?ara=" + encodeURI(kelime)
         })
@@ -105,7 +105,7 @@ class turkceSozlukApi extends EventEmitter{
      * @param {string} atasozu
      * @return {Promise<boolean>}
      */
-    async AtasozuDeyimKontrol(atasozu){
+    async AtasozuDeyimKontrol(atasozu: string){
         const response = await axios.request({
             url: "https://sozluk.gov.tr/atasozu?ara=" + encodeURI(atasozu)
         })
@@ -144,7 +144,7 @@ class turkceSozlukApi extends EventEmitter{
         }
         }
     }
-    async IsimKontrol(cinsiyet, isim){
+    async IsimKontrol(cinsiyet: "kiz" | "erkek", isim: string){
         if(cinsiyet !== "erkek"){
             if(cinsiyet !== "kiz"){
                 throw new TypeError("Cinsiyet belirtimi hatalı lütfen: kiz/erkek yazın.")
@@ -207,7 +207,7 @@ class turkceSozlukApi extends EventEmitter{
             }
       }
     }
-    async EczacilikTerimAnlamCekme(terim){
+    async EczacilikTerimAnlamCekme(terim: string){
         try {
         const response = await axios.request({
             url: `https://sozluk.gov.tr/eczacilik?ara=${encodeURI(terim)}`
@@ -235,7 +235,7 @@ class turkceSozlukApi extends EventEmitter{
         }
       }
     }
-    async KelimeLehceleriCekme(kelime){
+    async KelimeLehceleriCekme(kelime: string){
         try {
             const response = await axios.request({
                 url: `https://sozluk.gov.tr/lehceler?ara=${encodeURI(kelime)}`
@@ -349,7 +349,7 @@ class turkceSozlukApi extends EventEmitter{
             }
         }
     }
-    async KelimeYazimCekme(kelime){
+    async KelimeYazimCekme(kelime: string){
         try {
         const response = await axios.request("https://sozluk.gov.tr/yazim?ara="+encodeURI(kelime))
         const body = response.data[0]
@@ -372,7 +372,7 @@ class turkceSozlukApi extends EventEmitter{
         }
         }
     }
-    async KelimeDerlemeVeriCekme(kelime){
+    async KelimeDerlemeVeriCekme(kelime: string){
         try {
         const response = await axios.request("https://sozluk.gov.tr/derleme?ara="+encodeURI(kelime))
         const body = response.data[0]
@@ -405,4 +405,4 @@ class turkceSozlukApi extends EventEmitter{
 
 
 
-module.exports.default = new turkceSozlukApi()
+export default new turkceSozlukApi()
