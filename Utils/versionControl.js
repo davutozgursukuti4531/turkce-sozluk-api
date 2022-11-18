@@ -1,17 +1,13 @@
-const rexarTools = require("rexar-tools").default
+import rexarTools from"rexar-tools"
 
 
-/**
- * 
- * @param {string} warmMessage 
- * @returns {Promise<void>}
- */
-const versionControl = async(warmMessage) => {
+
+const versionControl = async(warnMessage: string): Promise<void> => {
 
 const thisModule = await rexarTools.npm("turkce-sozluk-api")
     if(require(`../package.json`).version !== thisModule.version){
-        console.log(warmMessage)
+        console.log(warnMessage)
     } else return;
 }
 
-module.exports = versionControl
+export default versionControl
